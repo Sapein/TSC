@@ -8,6 +8,7 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <RootNamespace>TSC_AvaloniaUI</RootNamespace>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>CS8524</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,5 +27,12 @@
 
     <ItemGroup>
       <UpToDateCheckInput Remove="Controls\FilePreview.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\TagButton.axaml.cs">
+        <DependentUpon>TagButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

@@ -12,5 +12,6 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://TSC_AvaloniaUI/Icons.axaml" />
+        <StyleInclude Source="avares://TSC_AvaloniaUI/Controls/TagButton.axaml" />
     </Application.Styles>
 </Application>

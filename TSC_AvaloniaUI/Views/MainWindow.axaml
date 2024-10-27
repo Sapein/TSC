@@ -4,6 +4,7 @@
         xmlns:views="using:TSC_AvaloniaUI.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:TSC_AvaloniaUI.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TSC_AvaloniaUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -33,7 +34,9 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File"/>
-                <MenuItem Header="Edit"/>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Create Tag" Command="{Binding CreateTagCommand}"/>
+                </MenuItem>
                 <MenuItem Header="Tools"/>
                 <MenuItem Header="Window"/>
                 <MenuItem Header="Help" />
@@ -74,7 +77,11 @@
                 <DropDownButton FontSize="12"> And (Includes All Tags) </DropDownButton>
                 <DropDownButton FontSize="12"> Small Thumbnails </DropDownButton>
             </StackPanel>
-            <StackPanel DockPanel.Dock="Right" Margin="5, 0,0,0">
+            <StackPanel 
+                Name="ItemInfo"
+                MaxWidth="300"
+                DockPanel.Dock="Right"
+                Margin="5, 0,0,0">
                 <StackPanel Spacing="5" Width="200">
                     <Border
                         Background="#3A3A3A"
@@ -95,6 +102,7 @@
                 <TextBlock Margin="0 5 0 0" Text="{Binding SelectedEntry.Name}">
                     No Information Selected
                 </TextBlock>
+                
                 <!-- FileInfo Box -->
                 <Border
                     Background="#3A3A3A"
@@ -116,15 +124,16 @@
                     BorderThickness="1">
                     <StackPanel>
                         <TextBlock>Tags:</TextBlock>
-                        <ItemsControl ItemsSource="{Binding SelectedEntry.Tags}">
+                        <ItemsControl ItemsSource="{Binding Tags}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel />
+                                    <WrapPanel MaxWidth="{Binding #ItemInfo.MaxWidth}"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.DataTemplates>
                                 <DataTemplate DataType="{x:Type TypeName=vm:AddTagViewModel}">
-                                    <Button Content="+" />
+                                    <Button Content="+" 
+                                            Command="{Binding $parent[views:MainWindow].((vm:MainWindowViewModel)DataContext).AddTagCommand}"/>
                                 </DataTemplate>
                             </ItemsControl.DataTemplates>
                         </ItemsControl>

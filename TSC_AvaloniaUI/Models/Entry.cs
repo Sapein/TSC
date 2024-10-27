@@ -11,7 +11,7 @@ public class Entry {
     public string FileName { get; set; }
     public string Extension { get; set; }
 
-    public IEnumerable<(TagType, Tag)> Tags { get; set; } = [];
+    public IEnumerable<(TagType, Tag)> Tags { get; set; } = [(TagType.Positive, new Tag { TagName = "Positive" }), (TagType.Negative, new Tag { TagName = "Negative" })];
     
     
     public Entry(string path) {
