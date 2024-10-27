@@ -23,8 +23,10 @@ public class MainWindowViewModel : ViewModelBase {
     
     public Interaction<IEnumerable<Tag>, Tag?> CreateTagInteraction { get; }
     public Interaction<IEnumerable<Tag>, IEnumerable<TagViewModel>> AddTagInteraction { get; }
+    public Interaction<List<Tag>, Unit> ManageTagsInteraction { get; }
     public ICommand CreateTagCommand { get; }
     public ICommand AddTagCommand { get; }
+    public ICommand ManageTagsCommand { get; }
     
     public EntryViewModel? SelectedEntry {
         get => _selectedEntry;
@@ -34,17 +36,30 @@ public class MainWindowViewModel : ViewModelBase {
         }
     }
 
-    
+
     public MainWindowViewModel() {
         RxApp.MainThreadScheduler.Schedule(LoadDir);
         CreateTagInteraction = new();
         AddTagInteraction = new();
+        ManageTagsInteraction = new();
         
         CreateTagCommand = ReactiveCommand.Create(async () => {
             var result = await CreateTagInteraction.Handle(AvailableTags);
 
             if (result != null) {
                 AvailableTags.Add(result);
+            }
+        });
+
+        ManageTagsCommand = ReactiveCommand.Create(async () => {
+            try {
+                await ManageTagsInteraction.Handle(AvailableTags);
+            } catch (Exception) {
+                // ignored
+            }
+
+            foreach (var file in Files) {
+                file.RemoveInvalidTags(AvailableTags);
             }
         });
 

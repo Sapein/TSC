@@ -40,6 +40,15 @@ public class EntryViewModel : ViewModelBase {
         
         Tags.AddRange(_entry.Tags.Select(i => new TagViewModel(i.Item2, i.Item1)).Select(i => { i.RemoveTagCommand = RemoveTagCommand; return i; }).Append<TagViewModelBase>(new AddTagViewModel(this)));
     }
+
+    public void RemoveInvalidTags(IEnumerable<Tag> tags) {
+        var tagsList = tags.ToList();
+        foreach (var tag in Tags.Where(x => x is TagViewModel).Cast<TagViewModel>()) {
+            if (tagsList.Contains(tag.Tag)) continue;
+            
+            Tags.Remove(tag);
+        }
+    }
     
     public void AddTags(IEnumerable<TagViewModel> result) {
         var last = Tags.Last();

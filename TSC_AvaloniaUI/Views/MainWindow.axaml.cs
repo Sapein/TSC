@@ -14,6 +14,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel> {
         this.WhenActivated(action => {
             action(ViewModel!.CreateTagInteraction.RegisterHandler(DoCreateTagAsync));
             action(ViewModel!.AddTagInteraction.RegisterHandler(DoAddTagAsync));
+            action(ViewModel!.ManageTagsInteraction.RegisterHandler(DoManageTagsAsync));
         });
     }
     private async Task DoCreateTagAsync(InteractionContext<IEnumerable<Tag>, Tag?> interaction) {
@@ -29,5 +30,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel> {
 
         var result = await dialog.ShowDialog<IEnumerable<TagViewModel>>(this);
         interaction.SetOutput(result);
+    }
+    private async Task DoManageTagsAsync(InteractionContext<List<Tag>, Unit> interaction) {
+        var dialog = new ManageTagsWindow();
+        dialog.DataContext = new ManageTagsViewModel(interaction.Input);
+
+       await dialog.ShowDialog<Unit>(this);
     }
 }
