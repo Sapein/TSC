@@ -16,6 +16,7 @@ public class TagViewModel : TagViewModelBase {
     public Tag Tag => _tag;
 
     public ICommand ToggleRelationshipCommand { get; }
+    public ReactiveCommand<TagViewModel, Unit>? RemoveTagCommand { get; set; }
 
 
     public TagViewModel(Tag tag) {

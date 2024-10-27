@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using DynamicData;
@@ -22,26 +23,28 @@ public class EntryViewModel : ViewModelBase {
     public ObservableCollection<TagViewModelBase> Tags { get; } = new();
     
     public ICommand AddTagCommand { get; }
+    private ReactiveCommand<TagViewModel, Unit> RemoveTagCommand { get; }
     
     public EntryViewModel(Entry entry) {
         _entry = entry;
-        Tags.AddRange(_entry.Tags.Select(i => new TagViewModel(i.Item2, i.Item1)).Append<TagViewModelBase>(new AddTagViewModel(this)));
         
-        AddTagCommand = ReactiveCommand.Create(() =>
-        {
-            var tag = new Tag { TagName = "New Tag!" };
-            Tags.Insert(0, new TagViewModel(tag));
+        AddTagCommand = ReactiveCommand.Create(() => {
+            var tag = new TagViewModel(new Tag { TagName = "New Tag!" });
+            tag.RemoveTagCommand = RemoveTagCommand;
+            Tags.Insert(0, tag);
         });
-    }
 
-    public void AddTag(Tag tag, TagType relationship) {
-        Tags.Add(new TagViewModel(tag, relationship));
+        RemoveTagCommand = ReactiveCommand.Create((TagViewModel tag) => {
+            Tags.Remove(tag);
+        });
+        
+        Tags.AddRange(_entry.Tags.Select(i => new TagViewModel(i.Item2, i.Item1)).Select(i => { i.RemoveTagCommand = RemoveTagCommand; return i; }).Append<TagViewModelBase>(new AddTagViewModel(this)));
     }
-
+    
     public void AddTags(IEnumerable<TagViewModel> result) {
         var last = Tags.Last();
         Tags.Remove(last);
-        Tags.AddRange(result);
+        Tags.AddRange(result.Select(i => { i.RemoveTagCommand = RemoveTagCommand; return i; }));
         Tags.Add(last);
     }
 }

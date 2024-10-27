@@ -7,5 +7,9 @@
              x:DataType="vm:TagViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TSC_AvaloniaUI.Views.TagView">
-    <controls:TagButton TagType="{Binding TagType}" TagText="{Binding Name}"/>
+    <controls:TagButton
+        ButtonCommand="{Binding RemoveTagCommand}"
+        ButtonCommandParameter="{Binding .}"
+        TagType="{Binding TagType}"
+        TagText="{Binding Name}"/>
 </UserControl>

@@ -4,18 +4,36 @@
     <Design.PreviewWith>
         <controls:TagButton />
     </Design.PreviewWith>
+    <Style Selector="controls|TagButton Button.popupRemoval" >
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="controls|TagButton:pointerover Button.popupRemoval" >
+        <Setter Property="IsVisible" Value="True" />
+    </Style>
 
     <Style Selector="controls|TagButton">
         <Setter Property="Template">
             <ControlTemplate>
-                <Button CornerRadius="5" Margin="0 0 6 0" Content="{TemplateBinding TagText}" />
+                <WrapPanel>
+                    <Button Content="-" Classes="popupRemoval" Background="Brown"
+                            Command="{TemplateBinding ButtonCommand}"
+                            CommandParameter="{TemplateBinding ButtonCommandParameter}"
+                            />
+                    <Button CornerRadius="5" Margin="0 0 6 0" Content="{TemplateBinding TagText}" />
+                </WrapPanel>
             </ControlTemplate>
         </Setter>
     </Style>
     <Style Selector="controls|TagButton[TagType=Negative]">
         <Setter Property="Template">
             <ControlTemplate>
-                <Button CornerRadius="5" Margin="0 0 6 0" Content="{TemplateBinding TagText}" Background="Brown" />
+                <WrapPanel>
+                    <Button Content="-" Classes="popupRemoval" Background="Brown"
+                            Command="{TemplateBinding ButtonCommand}"
+                            CommandParameter="{TemplateBinding ButtonCommandParameter}"
+                            />
+                    <Button CornerRadius="5" Margin="0 0 6 0" Content="{TemplateBinding TagText}" Background="Brown" />
+                </WrapPanel>
             </ControlTemplate>
         </Setter>
     </Style>
