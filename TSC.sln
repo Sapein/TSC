@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC_AvaloniaUI", "TSC_AvaloniaUI\TSC_AvaloniaUI.csproj", "{BEB2C7F3-6CC7-4389-A414-220B285AD5D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC.Splat.Extensions", "TSC.Splat.Extensions\TSC.Splat.Extensions.csproj", "{F704A3F0-D27C-4261-8A2A-1858C0BFB3DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,6 +14,10 @@ Global
 		{BEB2C7F3-6CC7-4389-A414-220B285AD5D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEB2C7F3-6CC7-4389-A414-220B285AD5D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEB2C7F3-6CC7-4389-A414-220B285AD5D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F704A3F0-D27C-4261-8A2A-1858C0BFB3DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F704A3F0-D27C-4261-8A2A-1858C0BFB3DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F704A3F0-D27C-4261-8A2A-1858C0BFB3DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F704A3F0-D27C-4261-8A2A-1858C0BFB3DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

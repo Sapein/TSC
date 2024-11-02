@@ -83,7 +83,7 @@
                 MaxWidth="300"
                 DockPanel.Dock="Right"
                 Margin="5, 0,0,0">
-                <StackPanel Spacing="5" Width="200">
+                <StackPanel Spacing="5" MinWidth="200" MaxWidth="300">
                     <Border
                         Background="#3A3A3A"
                         CornerRadius="10"
@@ -91,9 +91,13 @@
                         BorderBrush="Black"
                         Padding="0"
                         BorderThickness="5">
-                        <Panel>
-                            <Image Width="200"/>
-                            <Panel Height="200">
+                        <Panel
+                            ClipToBounds="True">
+                            <Image
+                                Width="300"
+                                Height="300"
+                                Source="{Binding SelectedEntry.Preview.FilePreview}" />
+                            <Panel Height="200" IsVisible="{Binding SelectedEntry.Preview, Converter={x:Static ObjectConverters.IsNull}}">
                                 <PathIcon Height="100" Width="100" Data="{StaticResource document_regular}" Foreground="White"/>
                             </Panel>
                         </Panel>

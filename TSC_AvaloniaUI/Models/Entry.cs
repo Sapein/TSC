@@ -3,29 +3,37 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using DynamicData;
+using TSC_AvaloniaUI.Views;
 
 namespace TSC_AvaloniaUI.Models;
 
 public class Entry {
-    public string Path { get; set; } 
-    public string FileName { get; set; }
-    public string Extension { get; set; }
+    public string Name { get; }
+    public string Path { get; } 
+    public string Extension { get; }
 
-    public IEnumerable<(TagType, Tag)> Tags { get; } = [];
-    
+
+    public SourceList<(TagType, Tag)> Tags { get; } = new();
     
     public Entry(string path) {
+        Name = System.IO.Path.GetFileName(path);
         Path = path;
-        FileName = System.IO.Path.GetFileName(path);
         Extension = System.IO.Path.GetExtension(path).Replace(".", "");
     }
     
+    public void AddTag((TagType, Tag) tag) {
+        Tags.Add(tag);
+    }
+
+    public void AddTags(IEnumerable<(TagType, Tag)> tags) {
+        Tags.AddRange(tags);
+    }
     
-    public static Task<IEnumerable<Entry>> GetFilesFromPath(string path) {
-        return Task.FromResult(Directory
-            .EnumerateFiles(path)
-            .Where(x => !string.IsNullOrEmpty(new DirectoryInfo(x).Extension))
-            .Select(x => new Entry(x)));
+    public void RemoveTag(Tag tag) {
+        var idx = Tags.Items.Select(x => x.Item2).IndexOf(tag);
+        Tags.RemoveAt(idx);
     }
 }
 

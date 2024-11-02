@@ -1,59 +1,65 @@
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Windows.Input;
+using System.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using TSC_AvaloniaUI.Models;
-using TSC_AvaloniaUI.Views;
 
 namespace TSC_AvaloniaUI.ViewModels;
 
 public class EntryViewModel : ViewModelBase {
     private readonly Entry _entry;
     
-    public string Extension => _entry.Extension;
-    public string Name => _entry.FileName;
+    // This exists so we can create a joint list.
+    private readonly SourceList<TagViewModelBase> _addTag = new();
     
+    public string Extension => _entry.Extension;
+    public string Name => _entry.Name;
+    public string Path => _entry.Path;
+    private IFilePreview? _filePreview;
+    public IFilePreview? Preview { get => _filePreview; set => this.RaiseAndSetIfChanged(ref _filePreview, value);}
+
+
     // We use TagViewModel base explicitly because we need to add in a final tag, that is always at the end. If we
     // did not, we have no way of actually adding the + button.
-    public ObservableCollection<TagViewModelBase> Tags { get; } = new();
-    
-    public ICommand AddTagCommand { get; }
+    public ObservableCollectionExtended<TagViewModelBase> Tags { get; } = [];
+
     private ReactiveCommand<TagViewModel, Unit> RemoveTagCommand { get; }
     
     public EntryViewModel(Entry entry) {
         _entry = entry;
+        _addTag.Add(new AddTagViewModel(this));
         
-        AddTagCommand = ReactiveCommand.Create(() => {
-            var tag = new TagViewModel(new Tag { TagName = "New Tag!" });
-            tag.RemoveTagCommand = RemoveTagCommand;
-            Tags.Insert(0, tag);
-        });
-
         RemoveTagCommand = ReactiveCommand.Create((TagViewModel tag) => {
-            Tags.Remove(tag);
+            _entry.RemoveTag(tag.Tag);
         });
-        
-        Tags.AddRange(_entry.Tags.Select(i => new TagViewModel(i.Item2, i.Item1)).Select(i => { i.RemoveTagCommand = RemoveTagCommand; return i; }).Append<TagViewModelBase>(new AddTagViewModel(this)));
-    }
 
-    public void RemoveInvalidTags(IEnumerable<Tag> tags) {
-        var tagsList = tags.ToList();
-        foreach (var tag in Tags.Where(x => x is TagViewModel).Cast<TagViewModel>()) {
-            if (tagsList.Contains(tag.Tag)) continue;
-            
-            Tags.Remove(tag);
+        _entry.Tags
+            .Connect()
+            .Transform(TagViewModelBase (t) => {
+                var tag = new TagViewModel(t.Item2, t.Item1) {
+                    RemoveTagCommand = RemoveTagCommand,
+                };
+
+                return tag;
+            })
+            .Or(_addTag.Connect())
+            .Bind(Tags)
+            .Subscribe();
+
+
+        if (Extension.Equals("png", StringComparison.InvariantCultureIgnoreCase)) {
+            Preview = new ImageFilePreview(Path);
         }
+        
+
     }
     
     public void AddTags(IEnumerable<TagViewModel> result) {
-        var last = Tags.Last();
-        Tags.Remove(last);
-        Tags.AddRange(result.Select(i => { i.RemoveTagCommand = RemoveTagCommand; return i; }));
-        Tags.Add(last);
+        _addTag.RemoveAt(0);
+        _entry.AddTags(result.Select(i => (i.TagType, i.Tag)));
+        _addTag.Add(new AddTagViewModel(this));
     }
 }

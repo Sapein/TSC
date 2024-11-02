@@ -9,8 +9,6 @@ namespace TSC_AvaloniaUI.ViewModels;
 public class AddTagViewModel : TagViewModelBase {
     private EntryViewModel _entry;
     
-    public ICommand AddTagCommand  => _entry.AddTagCommand;
-        
     public AddTagViewModel(EntryViewModel entry) {
         _entry = entry;
     }

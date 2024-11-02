@@ -15,11 +15,16 @@ public class AddTagToViewModel: ViewModelBase {
     public ObservableCollection<TagViewModel> Tags { get; } = new();
     public ObservableCollection<TagViewModel> SelectedTags { get; set; } = new();
 
-    public AddTagToViewModel(IEnumerable<Tag> tags) {
+    public AddTagToViewModel() {
         AddTagCommand = ReactiveCommand.Create(() => {
             return SelectedTags.AsEnumerable();
         });
 
-        Tags.AddRange(tags.Select(i => new TagViewModel(i)));
     }
+
+    public AddTagToViewModel UpdateTags(IEnumerable<Tag> tags) {
+        Tags.AddRange(tags.Select(i => new TagViewModel(i)));
+        return this;
+    }
+    
 }

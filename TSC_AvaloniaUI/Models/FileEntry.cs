@@ -1,15 +1,19 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace TSC_AvaloniaUI.Models;
 
 public class FileEntry {
-    public Entry Entry { get;  }
-    public string Path { get; set; } 
-    public string FileName { get; set; }
-    public string Extension { get; set; }
-    
-    public FileEntry(string path, Entry entry) {
+    public FileEntry(string name, string path, string extension) {
+        Name = name;
         Path = path;
-        FileName = System.IO.Path.GetFileName(path);
-        Extension = System.IO.Path.GetExtension(path).Replace(".", "");
-        Entry = entry;
+        Extension = extension;
     }
+    public string Name { get; }
+    public string Path { get; } 
+    public string Extension { get; }
+
+    public IEnumerable<(TagType, Tag)> Tags { get; } = [];
 }

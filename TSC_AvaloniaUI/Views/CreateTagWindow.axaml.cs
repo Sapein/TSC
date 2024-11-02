@@ -13,6 +13,6 @@ public partial class CreateTagWindow : ReactiveWindow<CreateTagViewModel>
         InitializeComponent();
         if (Design.IsDesignMode) return;
         
-        this.WhenActivated(action => action(ViewModel!.CreateTagCommand.Select(x => x).Subscribe(Close)));
+        this.WhenActivated(action => action(ViewModel!.CreateTagCommand.Subscribe(_ => Close())));
     }
 }

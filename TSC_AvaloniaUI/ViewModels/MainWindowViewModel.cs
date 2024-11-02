@@ -6,24 +6,33 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using DynamicData;
 using DynamicData.Binding;
+using DynamicData.Tests;
 using ReactiveUI;
+using Splat;
 using TSC_AvaloniaUI.Models;
+using TSC_AvaloniaUI.Services;
+using TSC.Splat.Extensions;
 
 namespace TSC_AvaloniaUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase {
+    private readonly IEntryService _entryService;
+    private readonly ITagService _tagService;
+    
     private EntryViewModel? _selectedEntry;
+    private ReadOnlyObservableCollection<EntryViewModel>? _files = null;
+    private ReadOnlyObservableCollection<TagViewModelBase>? _tags = null;
+
+    public ReadOnlyObservableCollection<EntryViewModel>? Files => _files;
+    public ReadOnlyObservableCollection<TagViewModelBase>? Tags => _tags;
     
-    public ObservableCollection<EntryViewModel> Files { get; } = [];
-    public ObservableCollection<TagViewModelBase>? Tags => _selectedEntry?.Tags;
-    public List<Tag> AvailableTags = new();
-    
-    public Interaction<IEnumerable<Tag>, Tag?> CreateTagInteraction { get; }
+    public Interaction<Unit, Tag?> CreateTagInteraction { get; }
     public Interaction<IEnumerable<Tag>, IEnumerable<TagViewModel>> AddTagInteraction { get; }
-    public Interaction<List<Tag>, Unit> ManageTagsInteraction { get; }
+    public Interaction<Unit, Unit> ManageTagsInteraction { get; }
     public ICommand CreateTagCommand { get; }
     public ICommand AddTagCommand { get; }
     public ICommand ManageTagsCommand { get; }
@@ -32,53 +41,57 @@ public class MainWindowViewModel : ViewModelBase {
         get => _selectedEntry;
         set {
             this.RaiseAndSetIfChanged(ref _selectedEntry, value);
+
+            if (value != null) {
+                _selectedEntry?.Tags.ToObservableChangeSet().Bind(out _tags).Subscribe();
+            } else {
+                _tags = null;
+            }
+
             this.RaisePropertyChanged(nameof(Tags));
         }
     }
-
-
-    public MainWindowViewModel() {
-        RxApp.MainThreadScheduler.Schedule(LoadDir);
+    
+    public MainWindowViewModel(ITagService? tagService = null, IEntryService? entryService = null) {
         CreateTagInteraction = new();
         AddTagInteraction = new();
         ManageTagsInteraction = new();
-        
-        CreateTagCommand = ReactiveCommand.Create(async () => {
-            var result = await CreateTagInteraction.Handle(AvailableTags);
 
-            if (result != null) {
-                AvailableTags.Add(result);
-            }
+        _tagService = Locator.Current.GetRequiredService(tagService);
+        _entryService = Locator.Current.GetRequiredService(entryService);
+
+        CreateTagCommand = ReactiveCommand.Create(async () => {
+            _ = await CreateTagInteraction.Handle(Unit.Default);
         });
 
         ManageTagsCommand = ReactiveCommand.Create(async () => {
             try {
-                await ManageTagsInteraction.Handle(AvailableTags);
+                await ManageTagsInteraction.Handle(Unit.Default);
             } catch (Exception) {
                 // ignored
             }
-
-            foreach (var file in Files) {
-                file.RemoveInvalidTags(AvailableTags);
-            }
+            await _entryService.RemoveInvalidTags();
         });
 
         AddTagCommand = ReactiveCommand.Create(async () =>
         {
-            var tags = AvailableTags.Where(x => !SelectedEntry?.Tags.Select(x => (x as TagViewModel)?.Tag).Where(x => x != null).Contains(x) ?? false);
+            var tags = tagService!.AvailableTags.Where(x => !SelectedEntry?.Tags.Select(vm => (vm as TagViewModel)?.Tag).Where(t => t != null).Contains(x) ?? false);
             var result = (await AddTagInteraction.Handle(tags)).ToList();
 
             if (result.Count != 0) {
                 SelectedEntry?.AddTags(result);
             }
         });
+        RxApp.MainThreadScheduler.Schedule(LoadDir);
     }
     
     private async void LoadDir() {
-        var files = (await Entry.GetFilesFromPath(Path.GetFullPath("/home/sapeint"))).Select(x => new EntryViewModel(x));
-
-        foreach (var album in files) {
-            Files.Add(album);
-        }
+        await _entryService.LoadEntries(Path.GetFullPath("/home/sapeint"));
+        _entryService
+            .Entries
+            .ToObservableChangeSet()
+            .Transform(x => new EntryViewModel(x))
+            .Bind(out _files)
+            .Subscribe();
     }
 }
