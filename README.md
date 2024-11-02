@@ -6,6 +6,14 @@ It's designed to be more geared towards asset management, than just organization
 
 
 ## QnA
+### Why do GIFs not play?  
+Currently, Avalonia does not fully support GIFs, while there are ways to make them animate/play for the time being
+I'm just not supporting it.
+
+### Why does X File Format not have a preview?  
+Currently, I've only implemented Previews for Images and Text Files as they were relatively easy to do. Adding in
+support for more file formats will be done eventually.
+
 ### What can this do?  
 Currently, nothing really.
 
