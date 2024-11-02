@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Windows.Input;
+using Avalonia.Markup.Xaml.XamlIl.Runtime;
 using DynamicData;
 using ReactiveUI;
 using Splat;
@@ -27,8 +28,9 @@ public class CreateTagViewModel : ViewModelBase {
         
         Tags.AddRange(tagService.AvailableTags);
         
-        CreateTagCommand = ReactiveCommand.Create(() => { 
-            tagService.AvailableTags.Add(new() { TagName = TagName, Children = SelectedParentTags.ToList()});
+        CreateTagCommand = ReactiveCommand.Create(() => {
+            // TODO Properly handle tag relationships
+            tagService.AvailableTags.Add(new() { TagName = TagName, Parents = SelectedParentTags.ToList()});
             
             return Unit.Default;
         });
