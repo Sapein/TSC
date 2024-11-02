@@ -6,11 +6,9 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Tests;
 using ReactiveUI;
 using Splat;
 using TSC_AvaloniaUI.Models;
@@ -30,7 +28,7 @@ public class MainWindowViewModel : ViewModelBase {
     public ReadOnlyObservableCollection<EntryViewModel>? Files => _files;
     public ReadOnlyObservableCollection<TagViewModelBase>? Tags => _tags;
     
-    public Interaction<Unit, Tag?> CreateTagInteraction { get; }
+    public Interaction<Unit, Unit> CreateTagInteraction { get; }
     public Interaction<IEnumerable<Tag>, IEnumerable<TagViewModel>> AddTagInteraction { get; }
     public Interaction<Unit, Unit> ManageTagsInteraction { get; }
     public ICommand CreateTagCommand { get; }
@@ -61,7 +59,7 @@ public class MainWindowViewModel : ViewModelBase {
         _entryService = Locator.Current.GetRequiredService(entryService);
 
         CreateTagCommand = ReactiveCommand.Create(async () => {
-            _ = await CreateTagInteraction.Handle(Unit.Default);
+            await CreateTagInteraction.Handle(Unit.Default);
         });
 
         ManageTagsCommand = ReactiveCommand.Create(async () => {
