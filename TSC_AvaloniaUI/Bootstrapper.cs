@@ -20,7 +20,6 @@ public struct Bootstrapper {
     public Bootstrapper RegisterServices() {
         SplatRegistrations.RegisterLazySingleton<ITagService, TagService>();
         SplatRegistrations.RegisterLazySingleton<IEntryService, EntryService>();
-        SplatRegistrations.RegisterLazySingleton<IPreviewService, PreviewService>();
         
         return this;
     }

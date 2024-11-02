@@ -5,7 +5,9 @@ using System.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
+using TSC_AvaloniaUI.Loaders;
 using TSC_AvaloniaUI.Models;
+using TSC_AvaloniaUI.Services;
 
 namespace TSC_AvaloniaUI.ViewModels;
 
@@ -50,11 +52,10 @@ public class EntryViewModel : ViewModelBase {
             .Subscribe();
 
 
-        if (Extension.Equals("png", StringComparison.InvariantCultureIgnoreCase)) {
-            Preview = new ImageFilePreview(Path);
-        }
-        
-
+        Preview = PreviewLoader.GetFilePreviewFromPath(Path) switch {
+            {IsSuccess: true, Value: var value} => value,
+            _ => null,
+        };
     }
     
     public void AddTags(IEnumerable<TagViewModel> result) {
