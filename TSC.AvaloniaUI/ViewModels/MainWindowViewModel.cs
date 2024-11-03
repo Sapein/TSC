@@ -83,7 +83,12 @@ public class MainWindowViewModel : ViewModelBase {
     }
     
     private async void LoadDir() {
-        await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)));
+        try {
+            await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
+        } catch (Exception) {
+            await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)));
+        }
+
         _entryService
             .Entries
             .ToObservableChangeSet()

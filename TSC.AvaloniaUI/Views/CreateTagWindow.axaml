@@ -9,6 +9,8 @@
         WindowStartupLocation="CenterOwner"
         MinWidth="300"
         MinHeight="300"
+        Width="300"
+        Height="300"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="True"
         Title="Create Tag">
