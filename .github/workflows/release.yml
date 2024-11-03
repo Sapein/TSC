@@ -36,7 +36,7 @@ jobs:
     - name: Publish TSC Build
       uses: actions/upload-artifact@v4
       with:
-        name: TSC Build
+        name: TSC-Build-${{ github.run_number }}-${{ matrix.os }}
         path: |
           publish/TSC.AvaloniaUI*
           !publish/**/*.dll
