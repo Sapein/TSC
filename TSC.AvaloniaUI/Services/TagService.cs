@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using CSharpFunctionalExtensions;
 using DynamicData;
@@ -18,6 +19,7 @@ public interface ITagService {
     
     public Result AddTag(Tag tag);
 
+    public Result RemoveTags(IEnumerable<Tag> tags);
     public Result RemoveTag(Tag tag);
 }
 
@@ -25,14 +27,7 @@ public interface ITagService {
 public class TagService: ITagService {
     public ObservableCollectionExtended<Tag> AvailableTags { get; } = new();
 
-    private readonly SourceList<Tag> _unavailableTags = new();
-    
-    public SourceList<Tag> UnavailableTags {
-        get {
-            _unavailableTags.Clear();
-            return _unavailableTags;
-        }
-    }
+    public SourceList<Tag> UnavailableTags { get; } = new();
 
     public bool TagExists(Tag tag) {
         return AvailableTags.Contains(tag) || AvailableTags.Select(i => i.Id).Contains(tag.Id);
@@ -58,13 +53,31 @@ public class TagService: ITagService {
         AvailableTags.Add(tag);
         return Result.Success();
     }
+
+    public Result RemoveTags(IEnumerable<Tag> tags) {
+        var itemsToRemove = tags.ToList();
+        
+        foreach (var tag in AvailableTags) {
+            tag.RemoveChildTags(itemsToRemove);
+            tag.RemoveParentTags(itemsToRemove);
+        }
+        
+        AvailableTags.RemoveMany(itemsToRemove);
+        return Result.Success();
+    }
     
-    public Result RemoveTag(Tag tag) {
-        if (!TagExists(tag)) {
+    public Result RemoveTag(Tag removedTag) {
+        if (!TagExists(removedTag)) {
             return Result.Failure("Tag does not exist");
         }
+        
 
-        AvailableTags.Remove(tag);
+        foreach (var tag in AvailableTags) {
+            tag.RemoveChildTag(tag);
+            tag.RemoveParentTag(tag);
+        }
+        
+        AvailableTags.Remove(removedTag);
         return Result.Success();
     }
 }

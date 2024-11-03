@@ -25,6 +25,17 @@ public class Tag: ReactiveObject {
         _children.Add(tag);
     }
 
+    public void RemoveParentTags(IEnumerable<Tag> tags) {
+        _parents.RemoveAll(tags.Contains);
+    }
+    
+    public void RemoveParentTag(Tag tag) {
+        _parents.Remove(tag);
+    }
+    public void RemoveChildTags(IEnumerable<Tag> tags) {
+        _children.RemoveAll(tags.Contains);
+    }
+    
     public void RemoveChildTag(Tag tag) {
         _children.Remove(tag);
     }

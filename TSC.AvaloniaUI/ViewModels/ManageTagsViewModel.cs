@@ -22,6 +22,7 @@ public class ManageTagsViewModel: ViewModelBase {
     
     public Interaction<Tag, Unit> EditTagInteraction { get; }
     public ICommand EditTagCommand { get; }
+    private readonly SourceList<Tag> _removedTags = new();
     private readonly ReadOnlyObservableCollection<Tag> _tags;
     public ReadOnlyObservableCollection<Tag> Tags => _tags;
 
@@ -29,28 +30,27 @@ public class ManageTagsViewModel: ViewModelBase {
         tagService = Locator.Current.GetRequiredService(tagService);
         EditTagInteraction = new();
         
-        var removedTags = tagService.UnavailableTags;
         
         DeleteTagCommand = ReactiveCommand.Create((Tag tag) => {
-            removedTags.Add(tag);
+            _removedTags.Add(tag);
         });
 
         SaveChangesCommand = ReactiveCommand.Create(() => {
-            foreach (var tag in removedTags.Items) {
-                tagService.RemoveTag(tag);
-            }
+            tagService.RemoveTags(_removedTags.Items);
             
             return Unit.Default;
         });
 
         EditTagCommand = ReactiveCommand.Create(async (Tag tag) => {
+            tagService.UnavailableTags.AddRange(_removedTags.Items);
             await EditTagInteraction.Handle(tag);
+            tagService.UnavailableTags.Clear();
         });
 
         tagService 
             .AvailableTags
             .ToObservableChangeSet()
-            .Except(removedTags.Connect())
+            .Except(_removedTags.Connect())
             .Bind(out _tags)
             .Subscribe();
     }
