@@ -84,9 +84,14 @@ public class EntryPageViewModel: PageViewModel {
     
     private async void LoadDir() {
         try {
-            await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
+            await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)));
         } catch (Exception) {
-            await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)));
+            try {
+                await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
+            }
+            catch (Exception) {
+                await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)));
+            }
         }
 
         _entryService
