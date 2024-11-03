@@ -30,7 +30,7 @@ public struct Bootstrapper {
     public Bootstrapper RegisterViewModels() {
         SplatRegistrations.Register<MainWindowViewModel>();
         SplatRegistrations.Register<ManageTagsViewModel>();
-        SplatRegistrations.Register<CreateTagViewModel>();
+        SplatRegistrations.Register<EditTagViewModel>();
         SplatRegistrations.Register<AddTagToViewModel>();
         SplatRegistrations.Register<EntryPageViewModel>();
         
@@ -39,7 +39,7 @@ public struct Bootstrapper {
 
     public Bootstrapper RegisterViews() {
         RegisterWindow<AddTagToWindow>();
-        RegisterWindowWithViewModel<CreateTagWindow, CreateTagViewModel>();
+        RegisterWindowWithViewModel<EditTagWindow, EditTagViewModel>();
         RegisterWindowWithViewModel<ManageTagsWindow, ManageTagsViewModel>();
         RegisterPageWithViewModel<EntryPageView, EntryPageViewModel>();
         

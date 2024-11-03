@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using DynamicData;
 using DynamicData.Binding;
@@ -32,7 +34,7 @@ public class EntryService : IEntryService {
     public Task RemoveInvalidTags() {
         foreach (var entry in Entries) {
             var invalidTags = entry.Tags.Items.Where(t => !_tagService.AvailableTags.Contains(t.Item2));
-
+        
             foreach (var tag in invalidTags) {
                 entry.Tags.Remove(tag);
             }

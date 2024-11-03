@@ -47,6 +47,7 @@ public class EntryViewModel : ViewModelBase {
 
                 return tag;
             })
+            .AutoRefresh(t => (t as TagViewModel)!.Tag.TagName)
             .Or(_addTag.Connect())
             .Bind(Tags)
             .Subscribe();

@@ -17,13 +17,23 @@
         <TextBlock Text="Manage Tags" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <TextBox Watermark="Search Tags" />
         <ListBox ItemsSource="{Binding Tags}">
+            <ListBox.ContextMenu>
+            </ListBox.ContextMenu>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Edit"
+                                          Command="{Binding $parent[views:ManageTagsWindow].((vm:ManageTagsViewModel)DataContext).EditTagCommand}"
+                                          CommandParameter="{Binding .}"
+                                          />
+                            </ContextMenu>
+                        </Grid.ContextMenu>
                         <TextBlock
                             Grid.Column="0"
                             Margin="5"
@@ -31,7 +41,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left" />
                         <Button
-                            Grid.Column="1"
+                            Grid.Column="2"
                             Content="Delete"
                             Command="{Binding $parent[views:ManageTagsWindow].((vm:ManageTagsViewModel)DataContext).DeleteTagCommand}"
                             CommandParameter="{Binding .}"

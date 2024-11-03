@@ -4,8 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:TSC.AvaloniaUI.ViewModels"
         mc:Ignorable="d"
-        x:DataType="vm:CreateTagViewModel"
-        x:Class="TSC.AvaloniaUI.Views.CreateTagWindow"
+        x:DataType="vm:EditTagViewModel"
+        x:Class="TSC.AvaloniaUI.Views.EditTagWindow"
         WindowStartupLocation="CenterOwner"
         MinWidth="300"
         MinHeight="300"
@@ -25,7 +25,7 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
         <StackPanel HorizontalAlignment="Center">
-            <TextBlock Text="Create New Tag" Margin="0 5 0 5" />
+            <TextBlock Text="Edit Tag" Margin="0 5 0 5" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBox Watermark="Tag Name" Margin="5" Text="{Binding TagName}" />
             </StackPanel>
@@ -46,9 +46,9 @@
             </ListBox>
             <Button
                 HorizontalAlignment="Center"
-                Content="Add Tag"
+                Content="Save Tag"
                 Margin="5"
-                Command="{Binding CreateTagCommand}" />
+                Command="{Binding SaveTagCommand}" />
         </StackPanel>
     </Panel>
 </Window>

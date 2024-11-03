@@ -25,7 +25,7 @@ public partial class EntryPageView : ReactiveUserControl<EntryPageViewModel> {
     }
     
     private async Task DoCreateTagAsync(IInteractionContext<Unit, Unit> interaction) {
-        var dialog = Locator.Current.GetService<CreateTagWindow>();
+        var dialog = Locator.Current.GetService<EditTagWindow>();
         if (dialog is null) throw new NullReferenceException();
 
         //NOTE: There has to be a better way to do this, I just don't really know how.

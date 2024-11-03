@@ -1,11 +1,6 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Avalonia.Controls;
 using DynamicData;
-using TSC.AvaloniaUI.Views;
 
 namespace TSC.AvaloniaUI.Models;
 
@@ -13,8 +8,7 @@ public class Entry {
     public string Name { get; }
     public string Path { get; } 
     public string Extension { get; }
-
-
+    
     public SourceList<(TagType, Tag)> Tags { get; } = new();
     
     public Entry(string path) {
