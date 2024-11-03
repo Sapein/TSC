@@ -10,7 +10,10 @@
              x:Class="TSC.AvaloniaUI.Views.Pages.EntryPageView">
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="File"/>
+                <MenuItem Header="File">
+                    <MenuItem Header="Manage Projects" />
+                    <MenuItem Header="Manage Libraries" />
+                </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Create Tag" Command="{Binding CreateTagCommand}" />
                     <MenuItem Header="Manage Tags" Command="{Binding ManageTagsCommand}" />
