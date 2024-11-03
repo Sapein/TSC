@@ -19,11 +19,10 @@ namespace TSC.AvaloniaUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase {
     private readonly IEntryService _entryService;
-    private readonly ITagService _tagService;
-    
+
     private EntryViewModel? _selectedEntry;
-    private ReadOnlyObservableCollection<EntryViewModel>? _files = null;
-    private ReadOnlyObservableCollection<TagViewModelBase>? _tags = null;
+    private ReadOnlyObservableCollection<EntryViewModel>? _files;
+    private ReadOnlyObservableCollection<TagViewModelBase>? _tags;
 
     public ReadOnlyObservableCollection<EntryViewModel>? Files => _files;
     public ReadOnlyObservableCollection<TagViewModelBase>? Tags => _tags;
@@ -55,7 +54,7 @@ public class MainWindowViewModel : ViewModelBase {
         AddTagInteraction = new();
         ManageTagsInteraction = new();
 
-        _tagService = Locator.Current.GetRequiredService(tagService);
+        Locator.Current.GetRequiredService(tagService);
         _entryService = Locator.Current.GetRequiredService(entryService);
 
         CreateTagCommand = ReactiveCommand.Create(async () => {
