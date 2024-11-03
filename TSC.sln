@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC_AvaloniaUI", "TSC_AvaloniaUI\TSC_AvaloniaUI.csproj", "{BEB2C7F3-6CC7-4389-A414-220B285AD5D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC.AvaloniaUI", "TSC.AvaloniaUI\TSC.AvaloniaUI.csproj", "{BEB2C7F3-6CC7-4389-A414-220B285AD5D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC.Splat.Extensions", "TSC.Splat.Extensions\TSC.Splat.Extensions.csproj", "{F704A3F0-D27C-4261-8A2A-1858C0BFB3DF}"
 EndProject

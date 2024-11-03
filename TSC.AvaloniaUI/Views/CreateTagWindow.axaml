@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TSC.AvaloniaUI.ViewModels"
+        mc:Ignorable="d"
+        x:DataType="vm:CreateTagViewModel"
+        x:Class="TSC.AvaloniaUI.Views.CreateTagWindow"
+        WindowStartupLocation="CenterOwner"
+        MinWidth="300"
+        MinHeight="300"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True"
+        Title="Create Tag">
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock Text="Create New Tag" Margin="0 5 0 5" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox Watermark="Tag Name" Margin="5" Text="{Binding TagName}" />
+            </StackPanel>
+            <TextBlock Text="Parent Tag(s):" Margin="0 10 0 5"  HorizontalAlignment="Center"/>
+            <ListBox
+                ItemsSource="{Binding Tags}"
+                SelectedItems="{Binding SelectedParentTags}"
+                SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                            <TextBlock
+                                Margin="5"
+                                Text="{Binding TagName}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button
+                HorizontalAlignment="Center"
+                Content="Add Tag"
+                Margin="5"
+                Command="{Binding CreateTagCommand}" />
+        </StackPanel>
+    </Panel>
+</Window>

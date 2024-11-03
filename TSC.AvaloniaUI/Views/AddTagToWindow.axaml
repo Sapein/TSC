@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TSC.AvaloniaUI.ViewModels"
+        xmlns:views="clr-namespace:TSC.AvaloniaUI.Views"
+        mc:Ignorable="d"
+        x:Class="TSC.AvaloniaUI.Views.AddTagToWindow"
+        x:DataType="vm:AddTagToViewModel"
+        WindowStartupLocation="CenterOwner"
+        MinWidth="300"
+        MinHeight="500"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True"
+        Title="Add Tag">
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Add Tags</TextBlock>
+            <ListBox ItemsSource="{Binding Tags}" SelectedItems="{Binding SelectedTags}" SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="5"
+                                Text="{Binding Name}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left" />
+                            <ToggleButton
+                                Grid.Column="1"
+                                Command="{Binding ToggleRelationshipCommand}"
+                                IsChecked="True"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <ToggleButton.Styles>
+                                    <Style Selector="ToggleButton">
+                                        <Setter Property="Background" Value="Brown" />
+                                    </Style>
+                                    <Style Selector="ToggleButton TextBlock.Positive">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </Style>
+                                    <Style Selector="ToggleButton:checked TextBlock.Positive">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </Style>
+                                    <Style Selector="ToggleButton TextBlock.Negative">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </Style>
+                                    <Style Selector="ToggleButton:checked TextBlock.Negative">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </Style>
+                                </ToggleButton.Styles>
+                                <Panel>
+                                    <TextBlock Text="Positive" Classes="Positive" />
+                                    <TextBlock Text="Negative" Classes="Negative" />
+                                </Panel>
+                            </ToggleButton>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding AddTagCommand}" Content="Add Tags" VerticalAlignment="Center"
+                    HorizontalAlignment="Center" />
+        </StackPanel>
+    </Panel>
+</Window>
