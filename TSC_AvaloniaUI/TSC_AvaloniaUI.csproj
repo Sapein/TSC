@@ -9,6 +9,10 @@
         <RootNamespace>TSC_AvaloniaUI</RootNamespace>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <NoWarn>CS8524</NoWarn>
+        
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
 
     <ItemGroup>
@@ -35,13 +39,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Controls\TagButton.axaml.cs">
-        <DependentUpon>TagButton.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\TSC.Splat.Extensions\TSC.Splat.Extensions.csproj" />
     </ItemGroup>
 
@@ -55,5 +52,11 @@
       <Content Include="..\TODO.md">
         <Link>TODO.md</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\TagButton.axaml.cs">
+        <DependentUpon>TagButton.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

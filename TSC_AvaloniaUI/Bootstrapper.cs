@@ -3,6 +3,7 @@ using Splat;
 using TSC_AvaloniaUI.Services;
 using TSC_AvaloniaUI.ViewModels;
 using TSC_AvaloniaUI.Views;
+using TSC_AvaloniaUI.Views.MainViews;
 
 namespace TSC_AvaloniaUI;
 
@@ -29,6 +30,7 @@ public struct Bootstrapper {
         SplatRegistrations.Register<ManageTagsViewModel>();
         SplatRegistrations.Register<CreateTagViewModel>();
         SplatRegistrations.Register<AddTagToViewModel>();
+        SplatRegistrations.Register<MainWindowEntryViewModel>();
         
         return this;
     }
@@ -37,6 +39,7 @@ public struct Bootstrapper {
         RegisterWindow<AddTagToWindow>();
         RegisterWindowWithViewModel<CreateTagWindow, CreateTagViewModel>();
         RegisterWindowWithViewModel<ManageTagsWindow, ManageTagsViewModel>();
+        RegisterControlWithViewModel<MainWindowEntryView, MainWindowEntryViewModel>();
         
         return this;
 
@@ -48,6 +51,12 @@ public struct Bootstrapper {
 
         void RegisterWindow<TW>() where TW : Window, new() {
             Locator.CurrentMutable.Register<TW>(() => new());
+        }
+        
+        void RegisterControlWithViewModel<TC, TVm>() where TC : UserControl, new() {
+            Locator.CurrentMutable.Register<TC>(() => new() {
+                DataContext = Locator.Current.GetService<TVm>(),
+            });
         }
     }
 }
