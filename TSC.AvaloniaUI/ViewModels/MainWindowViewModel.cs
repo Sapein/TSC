@@ -84,7 +84,7 @@ public class MainWindowViewModel : ViewModelBase {
     }
     
     private async void LoadDir() {
-        await _entryService.LoadEntries(Path.GetFullPath("/home/sapeint"));
+        await _entryService.LoadEntries(Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)));
         _entryService
             .Entries
             .ToObservableChangeSet()
