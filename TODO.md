@@ -6,6 +6,9 @@
 - [ ] Managed Libraries Implemented
 - [ ] Open Projects Implemented
 - [ ] Tag Creation and Tag Management 100% Implemented
+  - [ ] Proper Parent/Child Relationship
+  - [ ] Adding/Removing Parent/Child Relationships on existing tags
+  - [ ] Removing Parent/Child Relationships on tag deletion.
 
 - [X] Tagging Files 100% Implemented
 - [X] Basic File Type Preview 100% Implemented
