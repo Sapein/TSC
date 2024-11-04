@@ -2,25 +2,31 @@
 
 ## Required for Alpha
 - [ ] Database Implemented
-- [ ] Search Implemented
 - [ ] Managed Libraries Implemented
 - [ ] Open Projects Implemented
+- [ ] Implement Associated Tags
+  - [ ] Associated Tags UI Work
+  - [ ] Associated Tags Implementation Work
+ 
 - [ ] Tag Creation and Tag Management 100% Implemented
-  - [ ] Proper Parent/Child Relationship
-  - [ ] Adding/Removing Parent/Child Relationships on existing tags
-  - [ ] Removing Parent/Child Relationships on tag deletion.
+  - [X] Proper Parent/Child Relationship
+  - [X] Adding Parent/Child Relationships on Existing tags
+  - [ ] Removing Parent/Child Relationships on Existing tags
+  - [X] Removing Parent/Child Relationships on tag deletion.
 
+- [X] Search Implemented
 - [X] Tagging Files 100% Implemented
 - [X] Basic File Type Preview 100% Implemented
 
 ## Broad Features
 - [ ] Implement Database
 - [ ] Implement EXIF Data Saving (where possible)
+- [ ] Implement Advanced Search Mode
 
 ## UX Features
-- [ ] Search
-  - [ ] Actually implement searching in main window
-  - [ ] Actually implement searching when adding tags
+- [X] Search
+  - [X] Actually implement searching in main window
+  - [X] Actually implement searching when adding tags
 
 ## Entries  
 - [ ] Actually allow loading from folders
@@ -54,11 +60,18 @@
 - [X] Tagging
   - [X] Tag Files
   - [X] Untag Files
+  - [ ] Associated Tags
+    - [ ] Add Associated Tags to Entry
+    - [ ] Remove Associated Tag from Entry
+    - [ ] Edit Associated Tags on Entry
+    - [ ] Add Associated Tags UI
+    - [ ] Edit Associated Tags UI
+    - [ ] Remove Associated Tags UI
   
 - [ ] Projects
   - [ ] Add entry to project
   - [ ] Remove entry to project
-  
+
 - [ ] Libraries
   - [ ] Add entry to Library
   - [ ] Remove entry from Library
@@ -76,9 +89,12 @@
 
 - [ ] Tag Management
   - [ ] Edit Tags
+    - [X] Add Parents to Tag
+    - [ ] Remove All Parents from Tag
+    - [X] Remove Some Parents from Tag
   - [X] Remove Tags
     - [X] Remove Tags from Entries that have the tag upon removal.
-    - [ ] Remove Tags from Parents that have the tag upon removal.
+    - [X] Remove Tags from Parents that have the tag upon removal.
       - **Note:** When removing tags that have children, should the children be reparented, or just be left 'floating'?
 
 - [ ] Allow Tag Colors to be added (Requires Rework of Tag Relationships in UI)

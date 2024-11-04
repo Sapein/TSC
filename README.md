@@ -30,10 +30,12 @@ unfamiliar with Qt entirely.
 2. It's still *very* Alpha.
 Notably you can not remove tags.
 
-
 ### Why did you make this?
 Aside from the above, I wanted something that was a bit more Game-Development and more DAM focused, while retaining many
 of the features and design of TagStudio, I also wanted something that was/is a bit more stable.
+
+### When will this become alpha?  
+Check the TODO.md file to see what's left for me to do before I feel comfortable calling it alpha!
 
 ### Why use .NET and Avalonia?  
 Because I'm quite familiar with it, and I know XAML really well. I actually think XAML is not bad for designing and
