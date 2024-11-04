@@ -15,7 +15,7 @@
         Title="ManageTagsWindow">
     <StackPanel>
         <TextBlock Text="Manage Tags" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBox Watermark="Search Tags" />
+        <TextBox Watermark="Search Tags" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
         <ListBox ItemsSource="{Binding Tags}">
             <ListBox.ContextMenu>
             </ListBox.ContextMenu>

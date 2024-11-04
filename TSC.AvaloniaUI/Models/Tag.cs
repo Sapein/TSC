@@ -2,7 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ReactiveUI;
+using Splat;
+using TSC.AvaloniaUI.Services;
+using TSC.Splat.Extensions;
 
 namespace TSC.AvaloniaUI.Models;
 
@@ -20,6 +24,23 @@ public class Tag: ReactiveObject {
     }
 
     public IEnumerable<Tag> Children => _children;
+
+
+    public IEnumerable<Tag> FlattenParents() {
+        if (_parents.Count == 0) {
+            return new List<Tag> { this };
+        }
+
+        return Parents.SelectMany(parent => _parents).SelectMany(parent => parent.FlattenParents()).Prepend(this).Distinct();
+    }
+    
+    public bool ContainsParentTagByName(string tagName) {
+        return ContainsParentTag(Locator.Current.GetRequiredService<ITagService>().AvailableTags.FirstOrDefault(t => t.TagName == tagName));
+    }
+    
+    public bool ContainsParentTag(Tag? tag) {
+        return tag is not null && (tag == this || _parents.Any(p => p.ContainsParentTag(tag)));
+    }
 
     public void AddChildTag(Tag tag) {
         _children.Add(tag);

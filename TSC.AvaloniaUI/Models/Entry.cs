@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using DynamicData;
 
 namespace TSC.AvaloniaUI.Models;
@@ -15,6 +17,38 @@ public class Entry {
         Name = System.IO.Path.GetFileName(path);
         Path = path;
         Extension = System.IO.Path.GetExtension(path).Replace(".", "");
+    }
+
+    public bool HasAllTagsByName(IEnumerable<string> tagNames) {
+        if (Tags.Count == 0) return false;
+        if (Tags.Items.Where(t => t.Item1 == TagType.Negative).Any(t => tagNames.Contains(t.Item2.TagName))) return false;
+        if (Tags.Items.All(t => t.Item1 == TagType.Positive)) return Tags.Items.All(t => tagNames.All(t.Item2.ContainsParentTagByName));
+
+        var positiveRelationships = Tags
+            .Items
+            .Where(t => t.Item1 == TagType.Positive)
+            .Where(t => tagNames.Any(t.Item2.ContainsParentTagByName))
+            .SelectMany(t => t.Item2.FlattenParents())
+            .ToList();
+        
+        var negativeRelationships = Tags
+            .Items
+            .Where(t => t.Item1 == TagType.Negative)
+            .SelectMany(t => t.Item2.FlattenParents());
+
+        foreach (var nTag in negativeRelationships) {
+            positiveRelationships.Remove(nTag);
+        }
+
+        return tagNames.All(n => positiveRelationships.Select(n => n.TagName).Contains(n));
+    }
+
+    public bool HasAnyTagByName(IEnumerable<string> tagNames) {
+        if (Tags.Count == 0) return false;
+        return Tags
+            .Items
+            .Where(t => tagNames.Any(t.Item2.ContainsParentTagByName))
+            .All(t => t.Item1 == TagType.Positive);
     }
     
     public void AddTag((TagType, Tag) tag) {

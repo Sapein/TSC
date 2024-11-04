@@ -42,24 +42,33 @@
                 <Panel DockPanel.Dock="Right">
                     <Button
                         Content="Search"
+                        Command="{Binding SearchCommand}"
                         HorizontalAlignment="Right"
                         Margin="5" />
                 </Panel>
                 <Panel>
-                    <TextBox
-                        Watermark="Search Entries"
-                        Margin="10" />
+                    <StackPanel Margin="10">
+                        <TextBox
+                            Name="SearchBox"
+                            Watermark="Search Entries"
+                            Text="{Binding SearchText}"/>
+                        <ProgressBar
+                            IsVisible="{Binding IsBusy}"
+                            IsIndeterminate="True" />
+                    </StackPanel>
                 </Panel>
             </DockPanel>
             <StackPanel 
                 DockPanel.Dock="Top"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
-                <ComboBox FontSize="12" SelectedIndex="0">
+                <ComboBox FontSize="12" SelectedIndex="{Binding SearchMode}" >
                     <ComboBoxItem>And (Includes All Tags)</ComboBoxItem>
                     <ComboBoxItem>Or (Includes Any Tag)</ComboBoxItem>
                     <ComboBoxItem>By File Name</ComboBoxItem>
                     <ComboBoxItem>By File Extension</ComboBoxItem>
+                    <ComboBoxItem>Has Any Tags</ComboBoxItem>
+                    <ComboBoxItem>Has No Tags</ComboBoxItem>
                 </ComboBox>
                 <ComboBox FontSize="12" SelectedIndex="0">
                     <ComboBoxItem>Small Thumbnails</ComboBoxItem>
