@@ -27,11 +27,14 @@ public class EntryPageViewModel: PageViewModel {
     private EntryViewModel? _selectedEntry;
     private ReadOnlyObservableCollection<TagViewModelBase>? _tags;
     private string _searchText = string.Empty;
+    private string _actualText = string.Empty;
     public string SearchText { get => _searchText; set => this.RaiseAndSetIfChanged(ref _searchText, value); }
 
     private SearchModeEnum _searchMode = SearchModeEnum.TagAnd;
     public SearchModeEnum SearchMode { get => _searchMode; set => this.RaiseAndSetIfChanged(ref _searchMode, value); }
-    
+    private Func<Entry, bool> _filter = _ => true;
+    private Func<Entry, bool> Filter { get => _filter; set => this.RaiseAndSetIfChanged(ref _filter, value); }
+
     public ReactiveCommand<Unit, Unit> SearchCommand { get; }
 
 
@@ -82,7 +85,14 @@ public class EntryPageViewModel: PageViewModel {
             await _entryService.RemoveInvalidTags();
         });
 
-        SearchCommand = ReactiveCommand.Create(() => Unit.Default);
+        SearchCommand = ReactiveCommand.Create(() => {
+            Task.Run(() => {
+                _actualText = _searchText;
+                if(string.IsNullOrWhiteSpace(SearchText)) Filter = _ => true;
+                Filter = _ => false;
+                Filter = FilterEntries;
+            });
+        });
         
         AddTagCommand = ReactiveCommand.Create(async () =>
         {
@@ -112,29 +122,29 @@ public class EntryPageViewModel: PageViewModel {
         _entryService
             .Entries
             .ToObservableChangeSet()
-            .AutoRefreshOnObservable(_ => this.WhenPropertyChanged(t => t.SearchText).Throttle(TimeSpan.FromMilliseconds(400)))
-            .AutoRefreshOnObservable(_ => this.WhenPropertyChanged(t => t.SearchMode).Throttle(TimeSpan.FromMilliseconds(100)))
+            .AutoRefreshOnObservable(_ => this.WhenPropertyChanged(t => t.Filter).Throttle(TimeSpan.FromMilliseconds(500)))
             .Filter(FilterEntries)
             .Transform(x => new EntryViewModel(x))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Bind(out _files)
+            .ObserveOn(RxApp.TaskpoolScheduler)
             .Subscribe();
     }
 
     private bool FilterEntries(Entry entry) {
-        if (string.IsNullOrWhiteSpace(SearchText)) {
+        if (string.IsNullOrWhiteSpace(_actualText)) {
             if (SearchMode == SearchModeEnum.AnyTag) return entry.Tags.Count > 0;
             if (SearchMode == SearchModeEnum.NoTag) return entry.Tags.Count == 0;
             return true;
         }
         
         return SearchMode switch {
-            SearchModeEnum.TagAnd => entry.HasAllTagsByName(SearchText.Split(",").Select(n => n.Normalize()).Where(_tagService.AvailableTags.Select(x => x.TagName).Contains)),
-            SearchModeEnum.TagOr => entry.HasAnyTagByName(SearchText.Split(",").Select(n => n.Normalize()).Where(_tagService.AvailableTags.Select(x => x.TagName).Contains)),
+            SearchModeEnum.TagAnd => entry.HasAllTagsByName(_actualText.Split(",").Select(n => n.Normalize()).Where(_tagService.AvailableTags.Select(x => x.TagName).Contains)),
+            SearchModeEnum.TagOr => entry.HasAnyTagByName(_actualText.Split(",").Select(n => n.Normalize()).Where(_tagService.AvailableTags.Select(x => x.TagName).Contains)),
             SearchModeEnum.AnyTag => entry.Tags.Count > 0,
             SearchModeEnum.NoTag => entry.Tags.Count == 0,
-            SearchModeEnum.FileName => entry.Name.Contains(SearchText),
-            SearchModeEnum.FileExt => entry.Extension.Contains(SearchText),
+            SearchModeEnum.FileName => entry.Name.Contains(_actualText),
+            SearchModeEnum.FileExt => entry.Extension.Contains(_actualText),
         };
     }
 }

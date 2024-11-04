@@ -43,6 +43,7 @@
                     <Button
                         Content="Search"
                         Command="{Binding SearchCommand}"
+                        IsEnabled="{Binding !SearchCommand.IsExecuting}"
                         HorizontalAlignment="Right"
                         Margin="5" />
                 </Panel>
