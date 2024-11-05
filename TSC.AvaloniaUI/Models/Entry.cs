@@ -45,10 +45,26 @@ public class Entry {
 
     public bool HasAnyTagByName(IEnumerable<string> tagNames) {
         if (Tags.Count == 0) return false;
-        return Tags
+        if (Tags.Items.Where(t => t.Item1 == TagType.Negative).Any(t => tagNames.Contains(t.Item2.TagName))) return false;
+
+
+        var positiveRelationships = Tags
             .Items
+            .Where(t => t.Item1 == TagType.Positive)
             .Where(t => tagNames.Any(t.Item2.ContainsParentTagByName))
-            .All(t => t.Item1 == TagType.Positive);
+            .SelectMany(t => t.Item2.FlattenParents())
+            .ToList();
+        
+        var negativeRelationships = Tags
+            .Items
+            .Where(t => t.Item1 == TagType.Negative)
+            .SelectMany(t => t.Item2.FlattenParents());
+
+        foreach (var nTag in negativeRelationships) {
+            positiveRelationships.Remove(nTag);
+        }
+
+        return positiveRelationships.Count != 0 && tagNames.Any(n => positiveRelationships.Select(n => n.TagName).Contains(n));
     }
     
     public void AddTag((TagType, Tag) tag) {
