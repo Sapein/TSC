@@ -17,7 +17,8 @@ public class ImageFilePreview : IFilePreview {
     public ImageFilePreview(string filePath) {
         using var file = File.OpenRead(filePath);
 
-        FilePreview = Bitmap.DecodeToHeight(file, 500);
+        // FilePreview = Bitmap.DecodeToHeight(file, 500);
+        FilePreview = new(file);
     }
 }
 
