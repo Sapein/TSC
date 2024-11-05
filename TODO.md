@@ -8,10 +8,10 @@
   - [ ] Associated Tags UI Work
   - [ ] Associated Tags Implementation Work
  
-- [ ] Tag Creation and Tag Management 100% Implemented
+- [X] Tag Creation and Tag Management 100% Implemented
   - [X] Proper Parent/Child Relationship
   - [X] Adding Parent/Child Relationships on Existing tags
-  - [ ] Removing Parent/Child Relationships on Existing tags
+  - [X] Removing Parent/Child Relationships on Existing tags
   - [X] Removing Parent/Child Relationships on tag deletion.
 
 - [X] Search Implemented
@@ -87,10 +87,10 @@
   - [X] Allow for setting names
   - [X] Allow for setting parents
 
-- [ ] Tag Management
-  - [ ] Edit Tags
+- [X] Tag Management
+  - [X] Edit Tags
     - [X] Add Parents to Tag
-    - [ ] Remove All Parents from Tag
+    - [X] Remove All Parents from Tag
     - [X] Remove Some Parents from Tag
   - [X] Remove Tags
     - [X] Remove Tags from Entries that have the tag upon removal.
