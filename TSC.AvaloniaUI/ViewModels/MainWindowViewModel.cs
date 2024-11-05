@@ -8,7 +8,7 @@ public class MainWindowViewModel : ViewModelBase {
     private MainPageViewModel _currentPage = null!;
     public MainPageViewModel CurrentPage { get => _currentPage; set => this.RaiseAndSetIfChanged(ref _currentPage, value); }
     
-    public MainWindowViewModel(EntryPageView entryPageView) {
-        CurrentPage = entryPageView;
+    public MainWindowViewModel(EntryPageViewModel entryPageViewModel) {
+        CurrentPage = entryPageViewModel;
     }
 }

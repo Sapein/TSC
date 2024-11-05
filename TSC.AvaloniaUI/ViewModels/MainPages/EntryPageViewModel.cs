@@ -19,7 +19,7 @@ using TSC.Splat.Extensions;
 
 namespace TSC.AvaloniaUI.ViewModels.Pages;
 
-public class EntryPageView: MainPageViewModel {
+public class EntryPageViewModel: MainPageViewModel {
     public bool IsBusy { get; set; }
     private readonly IEntryService _entryService;
     private readonly ITagService _tagService;
@@ -64,7 +64,7 @@ public class EntryPageView: MainPageViewModel {
         }
     }
     
-    public EntryPageView(ITagService? tagService = null, IEntryService? entryService = null) {
+    public EntryPageViewModel(ITagService? tagService = null, IEntryService? entryService = null) {
         CreateTagInteraction = new();
         AddTagInteraction = new();
         ManageTagsInteraction = new();

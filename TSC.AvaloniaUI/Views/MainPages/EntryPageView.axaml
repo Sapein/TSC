@@ -6,7 +6,7 @@
              xmlns:view="clr-namespace:TSC.AvaloniaUI.Views.Pages"
              xmlns:vms="clr-namespace:TSC.AvaloniaUI.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:EntryPageView"
+             x:DataType="vm:EntryPageViewModel"
              x:Class="TSC.AvaloniaUI.Views.Pages.EntryPageView">
         <DockPanel>
             <Menu DockPanel.Dock="Top">
@@ -135,7 +135,7 @@
                             <ItemsControl.DataTemplates>
                                 <DataTemplate DataType="{x:Type TypeName=vms:AddTagViewModel}">
                                     <Button Content="+" 
-                                            Command="{Binding $parent[view:EntryPageView].((vm:EntryPageView)DataContext).AddTagCommand}"/>
+                                            Command="{Binding $parent[view:EntryPageView].((vm:EntryPageViewModel)DataContext).AddTagCommand}"/>
                                 </DataTemplate>
                             </ItemsControl.DataTemplates>
                         </ItemsControl>

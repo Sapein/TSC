@@ -14,7 +14,7 @@ using TSC.Splat.Extensions;
 
 namespace TSC.AvaloniaUI.Views.Pages;
 
-public partial class EntryPageView : ReactiveUserControl<ViewModels.Pages.EntryPageView> {
+public partial class EntryPageView : ReactiveUserControl<ViewModels.Pages.EntryPageViewModel> {
     public EntryPageView() {
         InitializeComponent();
         if (Design.IsDesignMode) return;
