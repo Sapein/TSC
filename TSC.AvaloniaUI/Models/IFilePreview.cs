@@ -1,13 +1,8 @@
-using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
-using CSharpFunctionalExtensions;
-using Microsoft.VisualBasic;
 
 namespace TSC.AvaloniaUI.Models;
 
@@ -22,7 +17,7 @@ public class ImageFilePreview : IFilePreview {
     public ImageFilePreview(string filePath) {
         using var file = File.OpenRead(filePath);
 
-        FilePreview = new Bitmap(file);
+        FilePreview = Bitmap.DecodeToHeight(file, 500);
     }
 }
 

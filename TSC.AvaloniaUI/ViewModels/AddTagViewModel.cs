@@ -1,6 +1,3 @@
-using System.Windows.Input;
-using TSC.AvaloniaUI.Models;
-
 namespace TSC.AvaloniaUI.ViewModels;
 
 // This exists solely because we need to do this because Avalonia, for some godsforsaken reason does not have CompositeCollection.

@@ -5,7 +5,6 @@ using System.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
-using TSC.AvaloniaUI.Services;
 using TSC.AvaloniaUI.Loaders;
 using TSC.AvaloniaUI.Models;
 

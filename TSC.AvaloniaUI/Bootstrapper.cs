@@ -56,7 +56,7 @@ public struct Bootstrapper {
         }
 
         void RegisterPage<TP>() where TP : UserControl, new() {
-            Locator.CurrentMutable.Register<TP>(() => new TP());
+            Locator.CurrentMutable.Register(() => new TP());
         }
 
         void RegisterPageWithViewModel<TP, TVm>() where TP : UserControl, new() {

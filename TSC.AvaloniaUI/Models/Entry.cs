@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
 using DynamicData;
 
 namespace TSC.AvaloniaUI.Models;
@@ -40,7 +38,7 @@ public class Entry {
             positiveRelationships.Remove(nTag);
         }
 
-        return tagNames.All(n => positiveRelationships.Select(n => n.TagName).Contains(n));
+        return tagNames.All(n => positiveRelationships.Select(t => t.TagName).Contains(n));
     }
 
     public bool HasAnyTagByName(IEnumerable<string> tagNames) {
@@ -64,7 +62,7 @@ public class Entry {
             positiveRelationships.Remove(nTag);
         }
 
-        return positiveRelationships.Count != 0 && tagNames.Any(n => positiveRelationships.Select(n => n.TagName).Contains(n));
+        return positiveRelationships.Count != 0 && tagNames.Any(n => positiveRelationships.Select(t => t.TagName).Contains(n));
     }
     
     public void AddTag((TagType, Tag) tag) {

@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows.Input;
-using Avalonia.Markup.Xaml.XamlIl.Runtime;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
-using Splat;
 using TSC.AvaloniaUI.Models;
 using TSC.AvaloniaUI.Services;
 

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
-using TSC.AvaloniaUI.Views;
 
 namespace TSC.AvaloniaUI.Models;
 

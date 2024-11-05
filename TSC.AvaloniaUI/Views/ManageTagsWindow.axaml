@@ -41,7 +41,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left" />
                         <Button
-                            Grid.Column="2"
+                            Grid.Column="1"
                             Content="Delete"
                             Command="{Binding $parent[views:ManageTagsWindow].((vm:ManageTagsViewModel)DataContext).DeleteTagCommand}"
                             CommandParameter="{Binding .}"

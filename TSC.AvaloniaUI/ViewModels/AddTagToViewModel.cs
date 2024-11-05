@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
-using System.Windows.Input;
 using DynamicData;
 using ReactiveUI;
 using TSC.AvaloniaUI.Models;
@@ -16,9 +15,7 @@ public class AddTagToViewModel: ViewModelBase {
     public ObservableCollection<TagViewModel> SelectedTags { get; set; } = new();
 
     public AddTagToViewModel() {
-        AddTagCommand = ReactiveCommand.Create(() => {
-            return SelectedTags.AsEnumerable();
-        });
+        AddTagCommand = ReactiveCommand.Create(() => SelectedTags.AsEnumerable());
 
     }
 

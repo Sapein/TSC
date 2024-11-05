@@ -1,8 +1,6 @@
-using System;
 using System.Reactive;
 using System.Windows.Input;
 using ReactiveUI;
-using TSC.AvaloniaUI.Views;
 using TSC.AvaloniaUI.Models;
 
 namespace TSC.AvaloniaUI.ViewModels;
