@@ -4,10 +4,11 @@ using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using TSC.AvaloniaUI.ViewModels;
+using TSC.AvaloniaUI.ViewModels.TagPages;
 
 namespace TSC.AvaloniaUI.Views;
 
-public partial class AddTagToWindow : ReactiveWindow<AddTagToViewModel>
+public partial class AddTagToWindow : ReactiveWindow<AddTagToWindowViewModel>
 {
     public AddTagToWindow() {
         InitializeComponent();

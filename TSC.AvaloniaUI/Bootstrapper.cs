@@ -3,8 +3,11 @@ using Splat;
 using TSC.AvaloniaUI.Services;
 using TSC.AvaloniaUI.ViewModels;
 using TSC.AvaloniaUI.ViewModels.Pages;
+using TSC.AvaloniaUI.ViewModels.TagPages;
 using TSC.AvaloniaUI.Views;
 using TSC.AvaloniaUI.Views.Pages;
+using EntryPageView = TSC.AvaloniaUI.ViewModels.Pages.EntryPageView;
+
 #pragma warning disable CS8321 // Local function is declared but never used
 
 namespace TSC.AvaloniaUI;
@@ -31,17 +34,19 @@ public struct Bootstrapper {
         SplatRegistrations.Register<MainWindowViewModel>();
         SplatRegistrations.Register<ManageTagsViewModel>();
         SplatRegistrations.Register<EditTagViewModel>();
-        SplatRegistrations.Register<AddTagToViewModel>();
-        SplatRegistrations.Register<EntryPageViewModel>();
+        SplatRegistrations.Register<AddTagToPageViewModel>();
+        SplatRegistrations.Register<AddTagToWindowViewModel>();
+        SplatRegistrations.Register<EntryPageView>();
         
         return this;
     }
 
     public Bootstrapper RegisterViews() {
-        RegisterWindow<AddTagToWindow>();
+        RegisterWindowWithViewModel<AddTagToWindow, AddTagToWindowViewModel>();
         RegisterWindowWithViewModel<EditTagWindow, EditTagViewModel>();
         RegisterWindowWithViewModel<ManageTagsWindow, ManageTagsViewModel>();
-        RegisterPageWithViewModel<EntryPageView, EntryPageViewModel>();
+        RegisterPageWithViewModel<Views.Pages.EntryPageView, EntryPageView>();
+        RegisterPageWithViewModel<Views.TagPages.AddTagToPageView, AddTagToPageViewModel>();
         
         return this;
 

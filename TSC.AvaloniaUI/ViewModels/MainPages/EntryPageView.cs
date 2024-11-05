@@ -14,11 +14,12 @@ using ReactiveUI;
 using Splat;
 using TSC.AvaloniaUI.Models;
 using TSC.AvaloniaUI.Services;
+using TSC.AvaloniaUI.ViewModels.MainPages;
 using TSC.Splat.Extensions;
 
 namespace TSC.AvaloniaUI.ViewModels.Pages;
 
-public class EntryPageViewModel: PageViewModel {
+public class EntryPageView: MainPageViewModel {
     public bool IsBusy { get; set; }
     private readonly IEntryService _entryService;
     private readonly ITagService _tagService;
@@ -63,7 +64,7 @@ public class EntryPageViewModel: PageViewModel {
         }
     }
     
-    public EntryPageViewModel(ITagService? tagService = null, IEntryService? entryService = null) {
+    public EntryPageView(ITagService? tagService = null, IEntryService? entryService = null) {
         CreateTagInteraction = new();
         AddTagInteraction = new();
         ManageTagsInteraction = new();

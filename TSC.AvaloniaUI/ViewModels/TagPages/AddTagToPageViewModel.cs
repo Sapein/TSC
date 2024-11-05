@@ -7,19 +7,19 @@ using DynamicData;
 using ReactiveUI;
 using TSC.AvaloniaUI.Models;
 
-namespace TSC.AvaloniaUI.ViewModels;
+namespace TSC.AvaloniaUI.ViewModels.TagPages;
 
-public class AddTagToViewModel: ViewModelBase {
+public class AddTagToPageViewModel: TagPageViewModel {
     public ReactiveCommand<Unit, IEnumerable<TagViewModel>> AddTagCommand { get; }
     public ObservableCollection<TagViewModel> Tags { get; } = new();
     public ObservableCollection<TagViewModel> SelectedTags { get; set; } = new();
 
-    public AddTagToViewModel() {
+    public AddTagToPageViewModel() {
         AddTagCommand = ReactiveCommand.Create(() => SelectedTags.AsEnumerable());
 
     }
 
-    public AddTagToViewModel UpdateTags(IEnumerable<Tag> tags) {
+    public AddTagToPageViewModel UpdateTags(IEnumerable<Tag> tags) {
         Tags.AddRange(tags.Select(i => new TagViewModel(i)));
         return this;
     }

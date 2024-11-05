@@ -9,10 +9,12 @@ using Splat;
 using TSC.AvaloniaUI.Models;
 using TSC.AvaloniaUI.ViewModels;
 using TSC.AvaloniaUI.ViewModels.Pages;
+using TSC.AvaloniaUI.ViewModels.TagPages;
+using TSC.Splat.Extensions;
 
 namespace TSC.AvaloniaUI.Views.Pages;
 
-public partial class EntryPageView : ReactiveUserControl<EntryPageViewModel> {
+public partial class EntryPageView : ReactiveUserControl<ViewModels.Pages.EntryPageView> {
     public EntryPageView() {
         InitializeComponent();
         if (Design.IsDesignMode) return;
@@ -33,10 +35,9 @@ public partial class EntryPageView : ReactiveUserControl<EntryPageViewModel> {
     }
     
     private async Task DoAddTagAsync(IInteractionContext<IEnumerable<Tag>, IEnumerable<TagViewModel>> interaction) {
-        var dialog = Locator.Current.GetService<AddTagToWindow>();
-        var viewModel = Locator.Current.GetService<AddTagToViewModel>()?.UpdateTags(interaction.Input);
-        if (dialog is null || viewModel is null) throw new NullReferenceException();
-        dialog.DataContext = viewModel;
+        var dialog = Locator.Current.GetRequiredService<AddTagToWindow>();
+        dialog.ViewModel?.UpdateTags(interaction.Input);
+        if (dialog is null) throw new NullReferenceException();
 
         //NOTE: There has to be a better way to do this, I just don't really know how.
         var result = await dialog.ShowDialog<IEnumerable<TagViewModel>>((TopLevel.GetTopLevel(this) as Window)!);

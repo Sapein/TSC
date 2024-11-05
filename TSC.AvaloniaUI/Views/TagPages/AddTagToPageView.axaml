@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tagPages="clr-namespace:TSC.AvaloniaUI.ViewModels.TagPages"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="tagPages:AddTagToPageViewModel"
+             x:Class="TSC.AvaloniaUI.Views.TagPages.AddTagToPageView">
+    <Panel>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">Add Tags</TextBlock>
+            <Button DockPanel.Dock="Bottom" Command="{Binding AddTagCommand}" Content="Add Tags" VerticalAlignment="Center"
+                    HorizontalAlignment="Center" />
+            <ListBox ItemsSource="{Binding Tags}" SelectedItems="{Binding SelectedTags}" SelectionMode="Multiple,Toggle">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="5"
+                                Text="{Binding Name}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left" />
+                            <ToggleButton
+                                Grid.Column="1"
+                                Command="{Binding ToggleRelationshipCommand}"
+                                IsChecked="True"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <ToggleButton.Styles>
+                                    <Style Selector="ToggleButton">
+                                        <Setter Property="Background" Value="Brown" />
+                                    </Style>
+                                    <Style Selector="ToggleButton TextBlock.Positive">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </Style>
+                                    <Style Selector="ToggleButton:checked TextBlock.Positive">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </Style>
+                                    <Style Selector="ToggleButton TextBlock.Negative">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </Style>
+                                    <Style Selector="ToggleButton:checked TextBlock.Negative">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </Style>
+                                </ToggleButton.Styles>
+                                <Panel>
+                                    <TextBlock Text="Positive" Classes="Positive" />
+                                    <TextBlock Text="Negative" Classes="Negative" />
+                                </Panel>
+                            </ToggleButton>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </Panel>
+</UserControl>
