@@ -41,9 +41,10 @@
                 Margin="5"
                 Command="{Binding SaveTagCommand}" />
             <ListBox
+                 
                 ItemsSource="{Binding Tags}"
                 SelectedItems="{Binding SelectedParentTags}"
-                SelectionMode="Multiple">
+                SelectionMode="Multiple,Toggle">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                             <TextBlock

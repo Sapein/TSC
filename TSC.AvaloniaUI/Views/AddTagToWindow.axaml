@@ -29,7 +29,7 @@
             <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">Add Tags</TextBlock>
             <Button DockPanel.Dock="Bottom" Command="{Binding AddTagCommand}" Content="Add Tags" VerticalAlignment="Center"
                     HorizontalAlignment="Center" />
-            <ListBox ItemsSource="{Binding Tags}" SelectedItems="{Binding SelectedTags}" SelectionMode="Multiple">
+            <ListBox ItemsSource="{Binding Tags}" SelectedItems="{Binding SelectedTags}" SelectionMode="Multiple,Toggle">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
