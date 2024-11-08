@@ -50,9 +50,12 @@ public class AddTagToWindowViewModel: ViewModelBase, IActivatableViewModel {
         interaction.SetOutput(Unit.Default);
     }
     
-    private void DoAddSubTags(IInteractionContext<Unit, Unit> interaction) {
+    private void DoAddSubTags(IInteractionContext<TagViewModel, Unit> interaction) {
         var page = Locator.Current.GetRequiredService<AddSubTagsPageViewModel>();
+        var tag = interaction.Input;
         page.FinishSubTagsInteraction.RegisterHandler(FinishAddSubTags);
+        page.Tag = tag;
+        page.UpdateTags(_addTagToPage.Tags.Where(x => x != tag));
         CurrentPage = page;
         interaction.SetOutput(Unit.Default);
     }

@@ -20,7 +20,7 @@ public class AddTagToPageViewModel : TagPageViewModel {
     public ObservableCollection<TagViewModel> Tags { get; } = new();
     public ObservableCollection<TagViewModel> SelectedTags { get; set; } = new();
 
-    public Interaction<Unit, Unit> AddSubTagsInteraction { get; }
+    public Interaction<TagViewModel, Unit> AddSubTagsInteraction { get; }
 
 
     public AddTagToPageViewModel() {
@@ -29,7 +29,7 @@ public class AddTagToPageViewModel : TagPageViewModel {
         AddSubTagCommand = ReactiveCommand.CreateFromTask(async (TagViewModel tag) => {
             // this.WhenActivated(action => action(ViewModel!.AddTagCommand.Select(x => x).Subscribe(Close)));
             
-            _ = await AddSubTagsInteraction.Handle(Unit.Default);
+            _ = await AddSubTagsInteraction.Handle(tag);
         });
     }
 
