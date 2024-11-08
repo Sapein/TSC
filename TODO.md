@@ -28,6 +28,10 @@
   - [X] Actually implement searching in main window
   - [X] Actually implement searching when adding tags
 
+- [ ] Proper Pagination
+
+- [ ] Actual Settings Menu
+
 ## Entries  
 - [ ] Actually allow loading from folders
 - [ ] Implement ZipFile handling features
