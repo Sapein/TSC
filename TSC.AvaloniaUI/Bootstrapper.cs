@@ -46,10 +46,9 @@ public struct Bootstrapper {
         RegisterWindowWithViewModel<AddTagToWindow, AddTagToWindowViewModel>();
         RegisterWindowWithViewModel<EditTagWindow, EditTagViewModel>();
         RegisterWindowWithViewModel<ManageTagsWindow, ManageTagsViewModel>();
-        RegisterPageWithViewModel<Views.Pages.EntryPageView, EntryPageView>();
-        RegisterPageWithViewModel<Views.TagPages.AddTagToPageView, AddTagToPageViewModel>();
         RegisterPageWithViewModel<EntryPageView, EntryPageViewModel>();
         RegisterPageWithViewModel<AddTagToPageView, AddTagToPageViewModel>();
+        RegisterPageWithViewModel<AddSubTagsPageView, AddSubTagsPageViewModel>();
         
         return this;
 

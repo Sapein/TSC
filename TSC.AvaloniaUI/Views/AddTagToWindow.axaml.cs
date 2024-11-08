@@ -8,8 +8,7 @@ using TSC.AvaloniaUI.ViewModels.TagPages;
 
 namespace TSC.AvaloniaUI.Views;
 
-public partial class AddTagToWindow : ReactiveWindow<AddTagToWindowViewModel>
-{
+public partial class AddTagToWindow : ReactiveWindow<AddTagToWindowViewModel> {
     public AddTagToWindow() {
         InitializeComponent();
         if (Design.IsDesignMode) return;

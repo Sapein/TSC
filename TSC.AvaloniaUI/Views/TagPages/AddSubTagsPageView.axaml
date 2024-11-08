@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:tagPages="clr-namespace:TSC.AvaloniaUI.ViewModels.TagPages"
+             x:DataType="tagPages:AddSubTagsPageViewModel"
+             x:Class="TSC.AvaloniaUI.Views.TagPages.AddSubTagsPageView">
+    <Panel>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">Add Associated Tags</TextBlock>
+            <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Tag.Name}"/>
+            <Button DockPanel.Dock="Bottom" Command="{Binding AddSubTagCommand}" Content="Add Associated Tags" VerticalAlignment="Center"
+                    HorizontalAlignment="Center" />
+            <ListBox ItemsSource="{Binding Tags}" SelectedItems="{Binding SelectedTags}" SelectionMode="Multiple,Toggle">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="5"
+                                Text="{Binding Name}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </Panel>
+</UserControl>

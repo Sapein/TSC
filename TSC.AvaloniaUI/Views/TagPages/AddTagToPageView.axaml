@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:tagPages="clr-namespace:TSC.AvaloniaUI.ViewModels.TagPages"
+             xmlns:views="clr-namespace:TSC.AvaloniaUI.Views.TagPages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="tagPages:AddTagToPageViewModel"
              x:Class="TSC.AvaloniaUI.Views.TagPages.AddTagToPageView">
@@ -25,8 +26,18 @@
                                 Text="{Binding Name}"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left" />
-                            <ToggleButton
+                            <StackPanel 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
                                 Grid.Column="1"
+                                Orientation="Horizontal">
+                                <Button
+                                    Command="{Binding $parent[views:AddTagToPageView].((tagPages:AddTagToPageViewModel)DataContext).AddSubTagCommand}"
+                                    CommandParameter="{Binding .}"
+                                    >
+                                    <PathIcon Data="{StaticResource text_bullet_list_tree_regular}" Foreground="White"/>
+                                </Button>
+                                <ToggleButton
                                 Command="{Binding ToggleRelationshipCommand}"
                                 IsChecked="True"
                                 VerticalAlignment="Center"
@@ -53,6 +64,7 @@
                                     <TextBlock Text="Negative" Classes="Negative" />
                                 </Panel>
                             </ToggleButton>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
